@@ -1,0 +1,12 @@
+resources:
+  - ../../base
+# - (additional resources that will only be applied in this environment)
+
+images:
+- name: quay.io/redhat-appstudio/component-a
+  newName: docker.io/sbose78/foobar
+  newTag: appstudio-component-a
+
+
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization

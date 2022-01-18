@@ -1,0 +1,24 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: component-a
+  namespace: test
+  labels:
+    app: component-a
+    app.kubernetes.io/component: component-a
+    app.kubernetes.io/instance: component-a
+    app.kubernetes.io/name: component-a
+    app.kubernetes.io/part-of: big-application
+    app.openshift.io/runtime-version: dev-code-with-quarkus
+spec:
+  ports:
+    - name: 8081-tcp
+      protocol: TCP
+      port: 8081
+      targetPort: 8081
+  internalTrafficPolicy: Cluster
+  type: ClusterIP
+  sessionAffinity: None
+  selector:
+    app: component-a
+    deploymentconfig: component-a

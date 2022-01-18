@@ -1,0 +1,21 @@
+kind: Route
+apiVersion: route.openshift.io/v1
+metadata:
+  name: component-a
+  namespace: test
+  labels:
+    app: component-a
+    app.kubernetes.io/component: component-a
+    app.kubernetes.io/instance: component-a
+    app.kubernetes.io/name: component-a
+    app.kubernetes.io/part-of: big-application
+    app.openshift.io/runtime-version: dev-code-with-quarkus
+
+spec:
+  to:
+    kind: Service
+    name: component-a
+    weight: 100
+  port:
+    targetPort: 8081-tcp
+  wildcardPolicy: None

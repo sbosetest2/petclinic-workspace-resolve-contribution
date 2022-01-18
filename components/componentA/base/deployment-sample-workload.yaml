@@ -1,0 +1,50 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: component-a
+  namespace: test
+  labels:
+    app: component-a
+    app.kubernetes.io/component: component-a
+    app.kubernetes.io/instance: component-a
+    app.kubernetes.io/name: component-a
+    app.kubernetes.io/part-of: big-application
+    app.openshift.io/runtime-namespace: test
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: component-a
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: component-a
+        deploymentconfig: component-a
+      annotations:
+        openshift.io/generated-by: OpenShiftWebConsole
+    spec:
+      containers:
+        - name: component-a
+          image: quay.io/redhat-appstudio/component-a
+          ports:
+            - containerPort: 8081
+              protocol: TCP
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          imagePullPolicy: IfNotPresent
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 30
+      dnsPolicy: ClusterFirst
+      securityContext: {}
+      schedulerName: default-scheduler
+      imagePullSecrets: []
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+  revisionHistoryLimit: 10
+  progressDeadlineSeconds: 600
+  paused: false
